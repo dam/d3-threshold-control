@@ -73,7 +73,7 @@
               } else { return; }
             } 
             else { 
-              if(d3.event.x >= mmin_x_scale && d3.event.x <= max_x_scale) {
+              if(d3.event.x >= min_x_scale && d3.event.x <= max_x_scale) {
                 transform = 'translate(' + d3.event.x + ',0)';  
                 threshold = x_scale.invert(d3.event.x);
                 new_text = x_label_f(threshold);
@@ -84,13 +84,23 @@
             label.attr('transform', transform).text(new_text);
           })
           .on('dragend', function() {
+            var returned_data = {};
             var out_of_threshold_data;  
 
-            out_of_threshold_data = data.filter(function(datum) {
-              return config.comparator(datum[orientation], threshold);
+            out_of_threshold_data = data.filter(function(datum, index) {
+              if(config.comparator(datum[orientation], threshold)) {
+                datum.index = index;
+                return true;
+              }
             });
+
+            returned_data.length = data.length;
+            returned_data.threshold = threshold;
+            returned_data.x_domain = x_scale.domain();
+            returned_data.y_domain = y_scale.domain();
+            returned_data.hits = out_of_threshold_data;
             
-            dispatch.threshold(out_of_threshold_data);
+            dispatch.threshold(returned_data);
           });
 
         threshold_line.call(drag);
