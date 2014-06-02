@@ -22,3 +22,9 @@ thresholdControl.event().on("threshold", thresholdCallback);
 svg.append("g")
    .call(thresholdControl);
 ```
+
+### Returned object
+On the thresholdCallback, an object like the follwing is returned:
+```javascript
+{length: ..., threshold: ..., x_domain: [..., ...], y_domain: [..., ...], hits: [...]}
+```
