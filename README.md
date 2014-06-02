@@ -24,7 +24,7 @@ svg.append("g")
 ```
 
 ### Returned object
-On the thresholdCallback, an object like the follwing is returned:
+On the thresholdCallback, an object like the following is returned:
 ```javascript
 {length: ..., threshold: ..., x_domain: [..., ...], y_domain: [..., ...], hits: [...]}
 ```
